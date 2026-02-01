@@ -2236,7 +2236,7 @@ vertical-align: -.125em;
 
 
 <p><em>Use this notebook to complete the sentence similarity and embedding visualization tasks.</em></p>
-<div id="31f7dde1" class="cell">
+<div id="31f7dde1" class="cell" data-execution_count="61">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
@@ -2255,7 +2255,7 @@ vertical-align: -.125em;
 [nltk_data]   Package punkt is already up-to-date!</code></pre>
 </div>
 </div>
-<div id="69b0a496" class="cell">
+<div id="69b0a496" class="cell" data-execution_count="62">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Sentence Similarity</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tokenize_text(text):</span>
@@ -2413,7 +2413,7 @@ Pretrained FastText Wiki (300d):
 <li>Pretrained Word2Vec GoogleNews (300d): it captures sentence meaning more accurately with higher scores. The top 3 ranks are correct and reasonable. Because this model is trained on a large corpus and can recognize synonyms and related expressions in semantic, such as “cat” and “feline,”, “rug” and “carpet.” Also, the embedding dimension is larger than 100, which can represent deeper semantic information.</li>
 <li>Pretrained FastText Wiki (300d): it is the best model from these four, which sentence meaning are more accurately. From the results, sentences that are semantically similar to the query, such as “The feline was resting on the rug” and “The cat sat on the mat,” are ranked at the top. Since the model is trained on a very large corpus and can recognize synonyms and related expressions in semantic, such as “cat” and “feline,”, “rug” and “carpet.” Also, the embedding dimension is larger than 100, which can represent deeper semantic information. Besides that, the ablitity of this model is high subword ability, so the cosine similarity is getting the highest.</li>
 </ol>
-<div id="76c4edcb" class="cell">
+<div id="76c4edcb" class="cell" data-execution_count="63">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Visualization</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>animals <span class="op">=</span> [</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;dog&#39;</span>, <span class="st">&#39;cat&#39;</span>, <span class="st">&#39;horse&#39;</span>, <span class="st">&#39;cow&#39;</span>,</span>
@@ -2507,7 +2507,7 @@ Pretrained FastText Wiki (300d):
 </div>
 </div>
 </div>
-<div id="9e2bd14c" class="cell">
+<div id="9e2bd14c" class="cell" data-execution_count="64">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize_umap(name, get_vec, dim, random_state<span class="op">=</span><span class="dv">0</span>, n_neighbors<span class="op">=</span><span class="dv">12</span>, min_dist<span class="op">=</span><span class="fl">0.4</span>):</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    groups <span class="op">=</span> {<span class="st">&quot;animals&quot;</span>: animals, <span class="st">&quot;foods&quot;</span>: foods}</span>
@@ -2607,6 +2607,88 @@ Pretrained FastText Wiki (300d):
 <li>I ask it for helping explaning ptyorch_tutorial.py, explaining the concepts and framework of word2vec and debugging.</li>
 <li>I check whether the results and plots are reasonable or not.</li>
 </ol>
+<div id="f493a685" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Bonus Within &amp; Between Bonus</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cosine_similarity(u, v, eps<span class="op">=</span><span class="fl">1e-12</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    denom <span class="op">=</span> (np.linalg.norm(u) <span class="op">*</span> np.linalg.norm(v)) <span class="op">+</span> eps</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(np.dot(u, v) <span class="op">/</span> denom)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> avg_within_distance(words, get_vec):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    vecs <span class="op">=</span> []</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> words:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> get_vec(w)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            vecs.append(v)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    distances <span class="op">=</span> []</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(vecs)):</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(vecs)):</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>            dist <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> cosine_sim(vecs[i], vecs[j])</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            distances.append(dist)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(distances)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> avg_between_distance(words1, words2, get_vec):</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    distances <span class="op">=</span> []</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w1 <span class="kw">in</span> words1:</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        v1 <span class="op">=</span> get_vec(w1)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v1 <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> w2 <span class="kw">in</span> words2:</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>            v2 <span class="op">=</span> get_vec(w2)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> v2 <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>            dist <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> cosine_sim(v1, v2)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>            distances.append(dist)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(distances)</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_embedding(name, get_vec):</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    within_animals <span class="op">=</span> avg_within_distance(animals, get_vec)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    within_foods <span class="op">=</span> avg_within_distance(foods, get_vec)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    between <span class="op">=</span> avg_between_distance(animals, foods, get_vec)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="ch">\n</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Within animals distance: </span><span class="sc">{</span>within_animals<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Within foods distance:   </span><span class="sc">{</span>within_foods<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Between groups distance: </span><span class="sc">{</span>between<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>analyze_embedding(<span class="st">&quot;PyTorch Skip-Gram (100d)&quot;</span>, get_vec_pytorch)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>analyze_embedding(<span class="st">&quot;Gensim Word2Vec text8 (100d)&quot;</span>, get_vec_gensim_text8)</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>analyze_embedding(<span class="st">&quot;Pretrained Word2Vec GoogleNews (300d)&quot;</span>, get_vec_google)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>analyze_embedding(<span class="st">&quot;Pretrained FastText Wiki (300d)&quot;</span>, get_vec_fasttext)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+PyTorch Skip-Gram (100d)
+Within animals distance: 1.0096
+Within foods distance:   1.0155
+Between groups distance: 0.9958
+
+Gensim Word2Vec text8 (100d)
+Within animals distance: 0.5244
+Within foods distance:   0.4144
+Between groups distance: 0.6351
+
+Pretrained Word2Vec GoogleNews (300d)
+Within animals distance: 0.6492
+Within foods distance:   0.6723
+Between groups distance: 0.8342
+
+Pretrained FastText Wiki (300d)
+Within animals distance: 0.5350
+Within foods distance:   0.5434
+Between groups distance: 0.6510</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>For the Pytorch Skip-gram embeddings, the within-group distances of animals and foods and the between-group distance are near 1, which means the embeddings don’t capture meaningful semantic structure and perform randomly.</p></li>
+<li><p>For the Gensim Word2Vec model, it shows smaller within-group distances and a larger between-group distance(0~1), which means it improves semantic within categories and divide two groups clearly.</p></li>
+<li><p>For the pretrained Word2vec model, itshows the largest between-group distance, which means it has the strongest semantic separation between animals and foods. It also has small within-group distance to show similarity.</p></li>
+<li><p>For the Fasttext embeddings, it also shows relatively small within-group distances and moderate between-group separation, reflecting stable semantic representations influenced by subword information.</p></li>
+</ol>
+<p>I think it is a good method to reflect pre-trained model based on larger and rich corpus can capture sentence’s similarity and seperate different types well.</p>
 </section>
 </section>
 
